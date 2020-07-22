@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="GestorStart.MainPage"
+             Title="Versión Alpha 1.0">
+
+    <StackLayout Orientation="Vertical">
+        <Button x:Name="btn1" Text="Ver Todos los Pacientes" Clicked="btn1_click"/>
+        <ListView x:Name="lstPaciente">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout 
+                            Padding="10"
+                            Orientation="Horizontal">
+                            <Label Text="{Binding PacienteId}"/>
+                            <Label Text="{Binding Rut}"/>
+                            <Label Text="{Binding Nombres}"/>
+                            <Label Text="{Binding ApPaterno}"/>
+                            <Label Text="{Binding Email}"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>
