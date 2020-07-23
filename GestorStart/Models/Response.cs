@@ -9,8 +9,14 @@ namespace GestorStart.Models
     public class Response
     {
         public string status { get; set; }
-        public string userid { get; set; }
+        public int userid { get; set; }
         public string message { get; set; }
+
+    }
+
+    public class Root
+    {
+        public Response response { get; set; }
 
     }
 

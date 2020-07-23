@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using GestorStart.Models;
+using GestorStart.Services;
+using GestorStart.RestApiClient;
 
 namespace GestorStart
 {
@@ -14,6 +16,7 @@ namespace GestorStart
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        public ApiServices apiServices;
         public MainPage()
         {
             InitializeComponent();
@@ -39,6 +42,50 @@ namespace GestorStart
             }
         }
 
+        private async void btn2_click(object sender, EventArgs e)
+        {
+            try
+            {
+                RestClient<Paciente> infoPac = new RestClient<Paciente>();
+                var res = await infoPac.getPaciente();
+
+                if (res != null)
+                {
+                    lstPaciente.ItemsSource = res;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        private async void btn3_click(object sender, EventArgs e)
+        {
+            try
+            {
+                RestClient<Calendario> infoCal = new RestClient<Calendario>();
+                var res = await infoCal.getCitas();
+
+                if (res != null)
+                {
+                   
+                    lstCalendario.ItemsSource = res;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private async void btn4_click(object sender, EventArgs e)
+        {
+            //https://wa.link/pzj230
+        }
+
+
         public async void btn1_salir(object sender, EventArgs e)
         {
             var answer = await DisplayAlert("Salir", "¿Esta seguro que quiere cerrar sesión? ", "Si", "No");
@@ -59,6 +106,22 @@ namespace GestorStart
             }
         }
        
+        public async void obtenerInfoPac()
+        {
+            var response = await this.apiServices.GetListAsync<Paciente>("https://www.doctoralanza.cl/info_pac.php/2");
+            if (!response.IsSuccess)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Error",
+                    response.Message,
+                    "Aceptar");
+                return;
+            }
+
+            var myInfo = (Paciente)response.Result;
+            
+
+        }
 
     }
 }

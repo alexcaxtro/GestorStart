@@ -37,12 +37,6 @@ namespace GestorStart.Models
             return Enumerable.Empty<Paciente>();
         }
 
-        public async Task<bool> checkLogin(string username, string password)
-        {
-            var httpClient = new HttpClient(); 
-            var response = await httpClient.GetAsync(LoginWebServiceUrl + "username=" + username + "/" + "password=" + password);
-            return response.IsSuccessStatusCode; // return either true or false
-        }
 
     }
 }

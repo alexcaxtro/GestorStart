@@ -9,6 +9,9 @@
 
     <StackLayout Orientation="Vertical">
         <Button x:Name="btn1" Text="Ver Todos los Pacientes" Clicked="btn1_click"/>
+        <Button x:Name="btn3" Text="Quién soy" Clicked="btn2_click"/>
+        <Button x:Name="btn4" Text="Mis citas anteriores" Clicked="btn3_click"/>
+        <Button x:Name="btn5" Text="Contacto" Clicked="btn4_click"/>
         <ListView x:Name="lstPaciente">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -21,6 +24,21 @@
                             <Label Text="{Binding Nombres}"/>
                             <Label Text="{Binding ApPaterno}"/>
                             <Label Text="{Binding Email}"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListView x:Name="lstCalendario">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout 
+                            Padding="10"
+                            Orientation="Horizontal">
+                            <Label Text="{Binding fechaEmision}"/>
+                            <Label Text="{Binding receta}"/>
+                            <Label Text="{Binding estado}"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

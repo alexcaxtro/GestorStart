@@ -45,8 +45,6 @@ namespace GestorStart
                 await DisplayAlert("Inicio de sesión fallido", "Usuario y/o Password son incorrectos o no existen", "Ok", "Cancelar");
             }
 
-
-
         }
     }
 }
