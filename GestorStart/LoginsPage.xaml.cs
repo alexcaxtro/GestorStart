@@ -1,9 +1,12 @@
 ﻿using GestorStart.Services;
 using GestorStart.ServicesHandler;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -16,7 +19,7 @@ namespace GestorStart
     public partial class LoginsPage : ContentPage
     {
        
-       
+
 
         public LoginsPage()
         {
@@ -25,20 +28,24 @@ namespace GestorStart
 
         private async void ButtonLogin_Clicked(object sender, EventArgs e)
         {
-            
-
             LoginService services = new LoginService();
             var getLoginDetails = await services.CheckLoginIfExists(Email.Text, Password.Text);
 
             if (getLoginDetails)
             {
-               
-                await DisplayAlert("Inicio de sesión exitoso", "Has Iniciado", "Ok", "Cancelar");
+                                
+                
+                await DisplayAlert("Inicio de sesión exitoso", "Has iniciado sesión", "Ok", "Cancelar");
+
+                Navigation.PushAsync(new MainPage());
             }
             else
             {
-                await DisplayAlert("Inicio de sesión fallido", "Usuario o Password son incorrectos o no existen", "Ok", "Cancelar");
+                await DisplayAlert("Inicio de sesión fallido", "Usuario y/o Password son incorrectos o no existen", "Ok", "Cancelar");
             }
+
+
+
         }
     }
 }

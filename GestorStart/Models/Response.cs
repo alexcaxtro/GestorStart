@@ -4,10 +4,15 @@ using System.Text;
 
 namespace GestorStart.Models
 {
+
+    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
     public class Response
     {
-        public bool IsSucces { get; set; }
-        public string Message { get; set; }
-        public object Result { get; set; }
+        public string status { get; set; }
+        public string userid { get; set; }
+        public string message { get; set; }
+
     }
+
+
 }

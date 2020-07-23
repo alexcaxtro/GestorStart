@@ -15,7 +15,7 @@ namespace GestorStart.ServicesHandler
         public async Task<bool> CheckLoginIfExists(string username, string password)
         {
             var check = await _restClient.checkLogin(username, password);
-
+            
             return check;
         }
     }
