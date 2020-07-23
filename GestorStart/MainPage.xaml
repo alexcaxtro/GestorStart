@@ -26,6 +26,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button x:Name="btn2" Text="Cerrar sesión" Clicked="btn1_salir"/>
     </StackLayout>
 
 </ContentPage>

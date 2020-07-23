@@ -17,6 +17,7 @@ namespace GestorStart
         public MainPage()
         {
             InitializeComponent();
+            
         }
 
         private async void btn1_click(object sender,EventArgs e)
@@ -37,6 +38,27 @@ namespace GestorStart
                 throw;
             }
         }
+
+        public async void btn1_salir(object sender, EventArgs e)
+        {
+            var answer = await DisplayAlert("Salir", "¿Esta seguro que quiere cerrar sesión? ", "Si", "No");
+            if (answer.Equals("Si"))
+            {
+                //Settings.FirstName = string.Empty;
+                //Settings.LastName = string.Empty;
+                //Settings.Email = string.Empty;
+                App.Current.Quit();
+                new NavigationPage(new LoginsPage());
+
+            }
+            else
+            {
+
+                await Navigation.PushAsync(new MainPage());
+
+            }
+        }
+       
 
     }
 }

@@ -37,7 +37,8 @@ namespace GestorStart
                 
                 await DisplayAlert("Inicio de sesión exitoso", "Has iniciado sesión", "Ok", "Cancelar");
 
-                Navigation.PushAsync(new MainPage());
+                var mp = new MainPage();
+                Application.Current.MainPage = new NavigationPage(mp);
             }
             else
             {

@@ -14,8 +14,6 @@ namespace GestorStart
             MainPage = new NavigationPage(new MainPage());
             MainPage = new LoginsPage();
 
-            NavigationPage navPage = new NavigationPage(new MainPage());
-            MainPage = navPage;
         }
 
         protected override void OnStart()
