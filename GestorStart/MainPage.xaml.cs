@@ -29,9 +29,26 @@ namespace GestorStart
             {
                 UserManager manager = new UserManager();
                 var res = await manager.getPacientes();
-
+                string Nombre = "";
+                string Rut = "";
+                string Sexo = "";
+                int PacienteId = 0;
                 if (res != null)
                 {
+                    foreach (var item in res)
+                    {
+                        Nombre = item.Nombres;
+                        Rut = item.Rut;
+                        Sexo = item.Sexo;
+                        PacienteId = item.PacienteId;
+                    }
+
+                    this.BindingContext = Nombre;
+                    this.BindingContext = Rut;
+                    this.BindingContext = Sexo;
+                    this.BindingContext = PacienteId;
+
+
                     lstPaciente.ItemsSource = res;
                 }
             }
@@ -94,8 +111,7 @@ namespace GestorStart
                 //Settings.FirstName = string.Empty;
                 //Settings.LastName = string.Empty;
                 //Settings.Email = string.Empty;
-                App.Current.Quit();
-                new NavigationPage(new LoginsPage());
+                await Navigation.PopToRootAsync();
 
             }
             else

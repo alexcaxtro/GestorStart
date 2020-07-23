@@ -45,6 +45,8 @@ namespace GestorStart
                 await DisplayAlert("Inicio de sesión fallido", "Usuario y/o Password son incorrectos o no existen", "Ok", "Cancelar");
             }
 
+            var getDetalles = await  services.getDatos(Email.Text, Password.Text);
+            string miId=getDetalles.ToString();
         }
     }
 }
