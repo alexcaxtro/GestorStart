@@ -16,11 +16,17 @@ namespace GestorStart
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+
+        string Nombre = "";
+        string Rut = "";
+        string Sexo = "";
+        int PacienteId = 0;
+
         public ApiServices apiServices;
         public MainPage()
         {
             InitializeComponent();
-            
+         
         }
 
         private async void btn1_click(object sender,EventArgs e)
@@ -29,10 +35,7 @@ namespace GestorStart
             {
                 UserManager manager = new UserManager();
                 var res = await manager.getPacientes();
-                string Nombre = "";
-                string Rut = "";
-                string Sexo = "";
-                int PacienteId = 0;
+                
                 if (res != null)
                 {
                     foreach (var item in res)
@@ -43,12 +46,6 @@ namespace GestorStart
                         PacienteId = item.PacienteId;
                     }
 
-                    this.BindingContext = Nombre;
-                    this.BindingContext = Rut;
-                    this.BindingContext = Sexo;
-                    this.BindingContext = PacienteId;
-
-
                     lstPaciente.ItemsSource = res;
                 }
             }
@@ -58,6 +55,25 @@ namespace GestorStart
                 throw;
             }
         }
+
+        private  void llenarFicha()
+        {
+            try
+            {
+                RestClient<Paciente> restClient = new RestClient<Paciente>();
+                var res = restClient.tenerPaciente();
+                
+                    this.BindingContext = Nombre;
+                    this.BindingContext = Rut;
+                    this.BindingContext = Sexo;
+                    this.BindingContext = PacienteId;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
 
         private async void btn2_click(object sender, EventArgs e)
         {
@@ -108,17 +124,13 @@ namespace GestorStart
             var answer = await DisplayAlert("Salir", "¿Esta seguro que quiere cerrar sesión? ", "Si", "No");
             if (answer.Equals("Si"))
             {
-                //Settings.FirstName = string.Empty;
-                //Settings.LastName = string.Empty;
-                //Settings.Email = string.Empty;
+               
                 await Navigation.PopToRootAsync();
 
             }
             else
             {
-
                 await Navigation.PushAsync(new MainPage());
-
             }
         }
        

@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="GestorStart.MainPage"
-             Title="Versión Alpha 1.0">
+             Title="Gestor para Consulta en línea">
 
     <StackLayout Orientation="Vertical">
         <Button x:Name="btn1" Text="Ver Todos los Pacientes" Clicked="btn1_click"/>
@@ -29,7 +29,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Label Text="{Binding PacienteId}"/>
+        <Label Text="{Binding .[1]}"/>
         <Label Text="{Binding Rut}"/>
         <Label Text="{Binding Nombres}"/>
         <Label Text="{Binding ApPaterno}"/>

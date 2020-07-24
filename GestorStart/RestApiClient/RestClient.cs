@@ -35,7 +35,7 @@ namespace GestorStart.RestApiClient
                 {
                     var jsonstring = await response.Content.ReadAsStringAsync();
                 
-                if (jsonstring.Contains("successfull"))
+                if (!jsonstring.Contains("0"))
                 {
                     var respuesta = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonstring);
                     return response.IsSuccessStatusCode;
@@ -50,12 +50,11 @@ namespace GestorStart.RestApiClient
         {
 
             HttpClient client = new HttpClient();
-           var response = await client.GetAsync(MainWebServiceUrl_new + "?" + "username=" + username + "&" + "password=" + password);
-            //string infoUsuario = await response.Content.ReadAsStringAsync();
-            //usuario = JsonConvert.DeserializeObject<Response>(infoUsuario);
-            // string userId = usuario.userid.ToString();
-            var reg = "";
-            return (reg); 
+            var response = await client.GetAsync(MainWebServiceUrl_new + "?" + "username=" + username + "&" + "password=" + password);
+            string infoUsuario = await response.Content.ReadAsStringAsync();
+            var usuario = JsonConvert.DeserializeObject<Usuario>(infoUsuario);
+            string usrId = usuario.UsuarioId.ToString();
+            return (usrId);
         }
 
 
@@ -73,6 +72,24 @@ namespace GestorStart.RestApiClient
 
             return Enumerable.Empty<Paciente>();
         }
+
+        public async Task<Paciente> tenerPaciente()
+        {
+            HttpClient client = new HttpClient();
+            string idUsuario = usuario.userid;
+            var res = await client.GetAsync(infoPacUrl + "?" + "UsuarioId=" + 1);
+
+            if (res.IsSuccessStatusCode)
+            {
+                string content = await res.Content.ReadAsStringAsync();
+                Paciente px = JsonConvert.DeserializeObject<Paciente>(content);
+                return px;
+            }
+
+            return null;
+        }
+
+
 
         public async Task<IEnumerable<Calendario>> getCitas()
         {

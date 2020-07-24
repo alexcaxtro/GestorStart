@@ -9,6 +9,10 @@
 
     public partial class Usuario
     {
- 
+        [JsonProperty("UsuarioId")]
+        public long UsuarioId { get; set; }
+
+        [JsonProperty("username")]
+        public string Username { get; set; }
     }
 }
