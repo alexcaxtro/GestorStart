@@ -1,15 +1,11 @@
-﻿using System;
+﻿using GestorStart.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using GestorStart.Models;
-using Newtonsoft.Json;
-using System.Linq;
-using Xamarin.Forms.Xaml;
 using Xamarin.Forms;
-using System.ComponentModel;
-using Newtonsoft.Json.Linq;
 
 namespace GestorStart.RestApiClient
 {
@@ -20,32 +16,35 @@ namespace GestorStart.RestApiClient
         private const string infoCalUrl = "https://www.doctoralanza.cl/cal_pac.php/";
         private const string MainWebServiceUrl_new = "https://www.doctoralanza.cl/newlogin.php";
         private Response usuario = new Response();
-        string infoUsuario { get; set; }
+        
 
+
+
+        //Método que realiza el login boolean que solo entrega un true o false pero no entrega más párametro, realiza el login sin problemas
         public async Task<bool> checkLogin(string username, string password)
         {
-           
-                HttpClient client = new HttpClient();
-                var response = await client.GetAsync(MainWebServiceUrl_new + "?" + "username=" + username + "&" + "password=" + password);
-                string infoUsuario = await response.Content.ReadAsStringAsync();
-                usuario = JsonConvert.DeserializeObject<Response>(infoUsuario);
-                
 
-            if (response.StatusCode==System.Net.HttpStatusCode.OK)
-                {
-                    var jsonstring = await response.Content.ReadAsStringAsync();
-                
-                if (!jsonstring.Contains("0"))
+            HttpClient client = new HttpClient();
+            var response = await client.GetAsync(MainWebServiceUrl_new + "?" + "username=" + username + "&" + "password=" + password);
+            string infoUsuario = await response.Content.ReadAsStringAsync();
+            usuario = JsonConvert.DeserializeObject<Response>(infoUsuario);
+
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var jsonstring = await response.Content.ReadAsStringAsync();
+
+                if (!jsonstring.Contains("{\"UsuarioId\":0,\"username\":0}"))
                 {
                     var respuesta = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonstring);
                     return response.IsSuccessStatusCode;
-                    
-                } 
-                    return false;
+
                 }
+                return false;
+            }
             return false;
         }
-
+        //Método que realiza lo mismo que login anterior pero en esta oportunidad para guardar el id del usuario logeado
         public async Task<string> getId(string username, string password)
         {
 
@@ -56,57 +55,63 @@ namespace GestorStart.RestApiClient
             string usrId = usuario.UsuarioId.ToString();
             return (usrId);
         }
-
-
+        //Necesito guardar este usrId para usarlo en los métodos que estan abajo de último
         public async Task<IEnumerable<Paciente>> getPaciente()
         {
-            HttpClient client = new HttpClient();
-            string idUsuario = usuario.userid;           
-            var res = await client.GetAsync(infoPacUrl + "?" + "UsuarioId=" + 1);
-
-            if (res.IsSuccessStatusCode)
+            if (Application.Current.Properties.ContainsKey("id"))
             {
-                string content = await res.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<IEnumerable<Paciente>>(content);
-            }
+                var id = Application.Current.Properties["id"] as string;
+                int UsuarioId = Convert.ToInt32(id);
+                HttpClient client = new HttpClient();
+                
+                var res = await client.GetAsync(infoPacUrl + "?" + "UsuarioId=" + UsuarioId);
 
+                if (res.IsSuccessStatusCode)
+                {
+                    string content = await res.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<IEnumerable<Paciente>>(content);
+                }
+            }
+            
             return Enumerable.Empty<Paciente>();
         }
 
         public async Task<Paciente> tenerPaciente()
         {
-            HttpClient client = new HttpClient();
-            string idUsuario = usuario.userid;
-            var res = await client.GetAsync(infoPacUrl + "?" + "UsuarioId=" + 1);
+            
 
-            if (res.IsSuccessStatusCode)
-            {
-                string content = await res.Content.ReadAsStringAsync();
-                Paciente px = JsonConvert.DeserializeObject<Paciente>(content);
-                return px;
-            }
+                HttpClient client = new HttpClient();
+                string idUsuario = usuario.userid;
+                var res = await client.GetAsync(infoPacUrl + "?" + "UsuarioId=" + 1);
 
-            return null;
+                if (res.IsSuccessStatusCode)
+                {
+                    string content = await res.Content.ReadAsStringAsync();
+                    Paciente px = JsonConvert.DeserializeObject<Paciente>(content);
+                    return px;
+                }
+           
+                return null;
         }
-
-
-
         public async Task<IEnumerable<Calendario>> getCitas()
         {
-            HttpClient client = new HttpClient();
-            
-            string idUsuario = usuario.userid;
-            var res = await client.GetAsync(infoCalUrl + "?" + "UsuarioId=" + 1);
-
-            if (res.IsSuccessStatusCode)
+            if (Application.Current.Properties.ContainsKey("id"))
             {
-                string content = await res.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<IEnumerable<Calendario>>(content);
-            }
+                var id = Application.Current.Properties["id"] as string;
+                int UsuarioId = Convert.ToInt32(id);
+                HttpClient client = new HttpClient();
 
+                string idUsuario = usuario.userid;
+                var res = await client.GetAsync(infoCalUrl + "?" + "UsuarioId=" + UsuarioId);
+
+                if (res.IsSuccessStatusCode)
+                {
+                    string content = await res.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<IEnumerable<Calendario>>(content);
+                }
+
+            }
             return Enumerable.Empty<Calendario>();
         }
-
-        
     }
 }

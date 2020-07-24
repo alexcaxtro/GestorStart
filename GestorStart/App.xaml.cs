@@ -2,6 +2,8 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using GestorStart;
+using Newtonsoft.Json;
+using GestorStart.Models;
 
 namespace GestorStart
 {
@@ -18,6 +20,8 @@ namespace GestorStart
 
         protected override void OnStart()
         {
+            
+           
         }
 
         protected override void OnSleep()

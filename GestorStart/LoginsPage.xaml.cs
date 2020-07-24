@@ -1,4 +1,5 @@
-﻿using GestorStart.Services;
+﻿using GestorStart.Models;
+using GestorStart.Services;
 using GestorStart.ServicesHandler;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -47,6 +48,7 @@ namespace GestorStart
 
             var getDetalles = await  services.getDatos(Email.Text, Password.Text);
             string miId=getDetalles.ToString();
+            Application.Current.Properties["id"] = miId;
         }
     }
 }

@@ -29,10 +29,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Label Text="{Binding .[1]}"/>
-        <Label Text="{Binding Rut}"/>
-        <Label Text="{Binding Nombres}"/>
-        <Label Text="{Binding ApPaterno}"/>
         <ListView x:Name="lstCalendario">
             <ListView.ItemTemplate>
                 <DataTemplate>

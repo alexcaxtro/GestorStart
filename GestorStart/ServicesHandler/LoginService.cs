@@ -1,10 +1,5 @@
 ﻿using GestorStart.Models;
 using GestorStart.RestApiClient;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GestorStart.ServicesHandler
@@ -13,7 +8,8 @@ namespace GestorStart.ServicesHandler
     {
         RestClient<UserDetailCredentials> _restClient = new RestClient<UserDetailCredentials>();
         RestClient<Response> _res = new RestClient<Response>();
-        // Boolean function with the following parameters of username & password.
+        //Función Booleana con los párametros username y password origen view del login y destino RestApiClient 
+
         public async Task<bool> CheckLoginIfExists(string username, string password)
         {
             var check = await _restClient.checkLogin(username, password);
@@ -24,12 +20,10 @@ namespace GestorStart.ServicesHandler
         public async Task<string> getDatos(string username, string password)
         {
             var check1 = await _res.getId(username, password);
-
             return check1;
         }
-
     }
 }
-    
+
 
 
