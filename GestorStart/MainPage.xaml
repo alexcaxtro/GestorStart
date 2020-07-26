@@ -9,9 +9,9 @@
 
     <StackLayout Orientation="Vertical">
         <Button x:Name="btn1" Text="Ver Todos los Pacientes" Clicked="btn1_click"/>
-        <Button x:Name="btn3" Text="Quién soy" Clicked="btn2_click"/>
         <Button x:Name="btn4" Text="Mis citas anteriores" Clicked="btn3_click"/>
-        <Button x:Name="btn5" Text="Contacto" Clicked="btn4_click"/>
+        <Button Text="Soy yo"
+        Command="{Binding SearchCommand}" />
         <ListView x:Name="lstPaciente">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -29,6 +29,30 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <StackLayout x:Name="minfo" Padding="20">
+            <Label
+          Text="{Binding Data.Rut}"
+                TextColor="Black" FontSize = "20"/>
+            <Label
+          Text="{Binding Data.Nombres}"
+                TextColor="Blue" FontSize = "20"/>
+            <Label
+          Text="{Binding Data.ApPaterno}"
+                TextColor="Gray" FontSize = "20"/>
+            <Label
+          Text="{Binding Data.ApMaterno}"
+                TextColor="Pink" FontSize = "20"/>
+            <Label
+          Text="{Binding Data.FechaNacimiento, StringFormat='{0:dd MMMM, yyyy}'}" />
+            <Label
+          Text="{Binding Data.Email}" />
+            <Label
+          Text="{Binding Data.Direccion}" />
+            <Label
+          Text="{Binding Data.Telefono}" />
+
+
+        </StackLayout>
         <ListView x:Name="lstCalendario">
             <ListView.ItemTemplate>
                 <DataTemplate>

@@ -8,6 +8,12 @@ using Xamarin.Forms;
 using GestorStart.Models;
 using GestorStart.Services;
 using GestorStart.RestApiClient;
+using System.Collections.ObjectModel;
+using System.Security.Cryptography.X509Certificates;
+using System.Collections.Specialized;
+using GestorStart.ViewModel;
+using System.Windows.Input;
+using Xamarin.Essentials;
 
 namespace GestorStart
 {
@@ -26,8 +32,14 @@ namespace GestorStart
         public MainPage()
         {
             InitializeComponent();
-         
+
+            BindingContext = new MainPageViewModel();
+            
         }
+
+        public ICommand TapCommand => new Command<string>(async (url) => await Launcher.OpenAsync(url));
+
+      
 
         private async void btn1_click(object sender,EventArgs e)
         {
@@ -56,35 +68,20 @@ namespace GestorStart
             }
         }
 
-        private  void llenarFicha()
-        {
-            try
-            {
-                RestClient<Paciente> restClient = new RestClient<Paciente>();
-                var res = restClient.tenerPaciente();
-                
-                    this.BindingContext = Nombre;
-                    this.BindingContext = Rut;
-                    this.BindingContext = Sexo;
-                    this.BindingContext = PacienteId;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
 
 
         private async void btn2_click(object sender, EventArgs e)
         {
             try
             {
+                
                 RestClient<Paciente> infoPac = new RestClient<Paciente>();
                 var res = await infoPac.getPaciente();
 
+
                 if (res != null)
                 {
-                    lstPaciente.ItemsSource = res;
+                    lstPaciente.BindingContext = res.Nombres;
                 }
             }
             catch (Exception)
@@ -115,6 +112,7 @@ namespace GestorStart
 
         private async void btn4_click(object sender, EventArgs e)
         {
+        
             //https://wa.link/pzj230
         }
 
@@ -124,7 +122,6 @@ namespace GestorStart
             var answer = await DisplayAlert("Salir", "¿Esta seguro que quiere cerrar sesión? ", "Si", "No");
             if (answer.Equals("Si"))
             {
-               
                 await Navigation.PopToRootAsync();
 
             }

@@ -56,7 +56,7 @@ namespace GestorStart.RestApiClient
             return (usrId);
         }
         //Necesito guardar este usrId para usarlo en los métodos que estan abajo de último
-        public async Task<IEnumerable<Paciente>> getPaciente()
+        public async Task<Paciente> getPaciente()
         {
             if (Application.Current.Properties.ContainsKey("id"))
             {
@@ -69,30 +69,39 @@ namespace GestorStart.RestApiClient
                 if (res.IsSuccessStatusCode)
                 {
                     string content = await res.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<IEnumerable<Paciente>>(content);
+                    return JsonConvert.DeserializeObject<Paciente>(content);
                 }
             }
             
-            return Enumerable.Empty<Paciente>();
+            return null;
         }
 
         public async Task<Paciente> tenerPaciente()
         {
-            
+
+
+            if (Application.Current.Properties.ContainsKey("id"))
+            {
+                var id = Application.Current.Properties["id"] as string;
+                int UsuarioId = Convert.ToInt32(id);
 
                 HttpClient client = new HttpClient();
                 string idUsuario = usuario.userid;
-                var res = await client.GetAsync(infoPacUrl + "?" + "UsuarioId=" + 1);
-
+                var res = await client.GetAsync(infoPacUrl + "?" + "UsuarioId=" + UsuarioId);
+                
                 if (res.IsSuccessStatusCode)
                 {
                     string content = await res.Content.ReadAsStringAsync();
                     Paciente px = JsonConvert.DeserializeObject<Paciente>(content);
                     return px;
                 }
-           
                 return null;
+            }
+            return null;
         }
+
+        
+
         public async Task<IEnumerable<Calendario>> getCitas()
         {
             if (Application.Current.Properties.ContainsKey("id"))
