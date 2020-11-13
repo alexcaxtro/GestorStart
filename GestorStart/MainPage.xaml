@@ -10,8 +10,7 @@
     <StackLayout Orientation="Vertical">
         <Button x:Name="btn1" Text="Ver Todos los Pacientes" Clicked="btn1_click"/>
         <Button x:Name="btn4" Text="Mis citas anteriores" Clicked="btn3_click"/>
-        <Button Text="Soy yo"
-        Command="{Binding SearchCommand}" />
+        <Button Text="Soy yo" Command="{Binding SearchCommand}" />
         <ListView x:Name="lstPaciente">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -29,7 +28,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <StackLayout x:Name="minfo" Padding="20">
+        <StackLayout x:Name="minfo" Padding="25">
             <Label
           Text="{Binding Data.Rut}"
                 TextColor="Black" FontSize = "20"/>

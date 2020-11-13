@@ -110,9 +110,9 @@ namespace GestorStart
             }
         }
 
-        private async void btn4_click(object sender, EventArgs e)
+        private void btn4_click(object sender, EventArgs e)
         {
-        
+
             //https://wa.link/pzj230
         }
 
